@@ -35,7 +35,7 @@ How to import and use a Complex Widget
 ### Option 1: Global import (see the [main](https://github.com/webix-hub/react-demo-complex/tree/main) branch)
 
 The minimum requirements to init the Spreadsheet/File Manager in a React app are
-- have a global Webix object  (it should be available *before* the component's sources are imported),
+- have a global Webix object  (it should be available *before* the component's sources are imported).
 Since there're two complex widgets in this demo, the global assignment was moved to `index.js`.
 - import the widget from "@xbs/filemanager"`.
 
@@ -48,7 +48,10 @@ window.webix = webix;
 componentDidMount() {
    webix.ready(() => {
       require("@xbs/filemanager")
-      webix.ui({ view:"filemanager" });
+      webix.ui({ 
+         view:"filemanager",
+         container: ReactDOM.findDOMNode(this.uiContainer.current);
+      });
    })
 }
 ```
@@ -56,7 +59,8 @@ componentDidMount() {
 ### Option 2: ProvidePlugin (see the [demo-provideplugin](https://github.com/webix-hub/react-demo-complex/tree/demo-provideplugin) branch)
 
 Another option is to use [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/).
-This is required if you want to initialize the File Manager [as an application](https://docs.webix.com/filemanager__creating_filemanager.html) (or other widgets that support this feature).
+This is required if you want to initialize the File Manager [as a Jet application](https://docs.webix.com/filemanager__creating_filemanager.html) (or other complex widgets that support this feature).<br/> 
+The Spreadsheet and Kanban will be initialized in the same way as in the 1st option.
 
 In Webpack configuration, add 
 ```js
@@ -71,8 +75,11 @@ componentDidMount(){
    webix.ready(() => {
       const fManager = require("@xbs/filemanager");
 
-      this.app = new fManager.App({ webix, url: "https://docs.webix.com/filemanager-backend/" })
-      this.app.render( document.body );
+      this.app = new fManager.App({
+         webix,	// provide the global Webix scope
+         url: "https://docs.webix.com/filemanager-backend/",
+      });
+      this.app.render(ReactDOM.findDOMNode(this.uiContainer.current))
    })
 }
 ```

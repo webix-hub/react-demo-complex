@@ -4,7 +4,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import '@xbs/webix-pro/webix.css';
+import "@xbs/webix-pro/webix.css";
 import "@xbs/filemanager/codebase/filemanager.css";
 
 class FilesView extends Component {
@@ -18,30 +18,33 @@ class FilesView extends Component {
 	}
 
 	componentDidMount() {
-    const container = ReactDOM.findDOMNode(this.uiContainer.current);
+		const container = ReactDOM.findDOMNode(this.uiContainer.current);
 
 		webix.ready(() => {
-			require("@xbs/filemanager");
+			const fManager = require("@xbs/filemanager");
 
-			this.ui = webix.ui({
-				view: "filemanager",
+			this.app = new fManager.App({
+				webix,	// provide the global Webix scope
 				url: "https://docs.webix.com/filemanager-backend/",
-				container,
+			});
+
+			this.app.render(container).then(() => {
+				this.resObserver = new ResizeObserver(() => {
+					const view = this.app.getRoot();
+					if (view) view.adjust();
+				});
+				this.resObserver.observe(container);
 			});
 		});
-
-		this.resObserver = new ResizeObserver(() => {
-			if (this.ui) this.ui.adjust();
-		});
-		this.resObserver.observe(container);
 	}
 
 	componentWillUnmount() {
-		if (this.ui) {
-			this.ui.destructor();
-			this.ui = null;
+		if (this.app) {
+			if (this.app.getRoot() && this.resObserver) this.resObserver.disconnect();
+
+			this.app.destructor();
+			this.app = null;
 		}
-		this.resObserver.disconnect();
 	}
 
 	shouldComponentUpdate() {
