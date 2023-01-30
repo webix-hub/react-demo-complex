@@ -50,7 +50,7 @@ componentDidMount() {
       require("@xbs/filemanager")
       webix.ui({ 
          view:"filemanager",
-         container: ReactDOM.findDOMNode(this.uiContainer.current);
+         container: ReactDOM.findDOMNode(this.uiContainer.current),
       });
    })
 }
@@ -79,7 +79,7 @@ componentDidMount(){
          webix,	// provide the global Webix scope
          url: "https://docs.webix.com/filemanager-backend/",
       });
-      this.app.render(ReactDOM.findDOMNode(this.uiContainer.current))
+      this.app.render(ReactDOM.findDOMNode(this.uiContainer.current));
    })
 }
 ```
