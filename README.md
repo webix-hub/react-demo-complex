@@ -71,7 +71,10 @@ componentDidMount(){
    webix.ready(() => {
       const fManager = require("@xbs/filemanager");
 
-      this.app = new fManager.App({ webix, url: "https://docs.webix.com/filemanager-backend/" })
+      this.app = new fManager.App({
+         webix,	// provide the global Webix scope
+         url: "https://docs.webix.com/filemanager-backend/",
+      });
       this.app.render( document.body );
    })
 }
