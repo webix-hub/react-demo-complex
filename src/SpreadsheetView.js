@@ -1,53 +1,47 @@
 // example of custom component with Webix UI inside
 // this one is a static view, not linked to the React data store
 
-import React, { Component } from "react";
+import React, { useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import "@xbs/webix-pro/webix.css";
 import "@xbs/spreadsheet/spreadsheet.css";
 
-class SheetsView extends Component {
-	constructor(props) {
-		super(props);
-		this.uiContainer = React.createRef();
-	}
+function SheetsView(props) {
+  const uiSheets = useRef(null);
+  const uiContainer = useRef(null);
 
-	render() {
-		return <div ref={this.uiContainer} style={{ height: "100%" }}></div>;
-	}
+  // init Spreadsheet (called once instead of componentDidMount)
+  // `return` of this effect does the job of componentWillUnmount
+  useEffect(() => {
+    const resObserver = new ResizeObserver(() => {
+      if (uiSheets.current) uiSheets.current.adjust();
+    });
 
-	componentDidMount() {
-		const container = ReactDOM.findDOMNode(this.uiContainer.current);
+    const container = ReactDOM.findDOMNode(uiContainer.current);
 
-		webix.ready(() => {
-			require("@xbs/spreadsheet");
+    webix.ready(() => {
+      require("@xbs/spreadsheet");
 
-			this.ui = webix.ui({
-				view: "spreadsheet",
-				toolbar: "full",
-				container,
-			});
-		});
+      uiSheets.current = webix.ui({
+        view: "spreadsheet",
+        toolbar: "full",
+        container,
+      });
+    });
 
-		this.resObserver = new ResizeObserver(() => {
-			if (this.ui) this.ui.adjust();
-		});
-		this.resObserver.observe(container);
-	}
+    resObserver.observe(container);
 
-	componentWillUnmount() {
-		if (this.ui) {
-			this.ui.destructor();
-			this.ui = null;
-		}
-		this.resObserver.disconnect();
-	}
+    return () => {
+      if (uiSheets.current) {
+        uiSheets.current.destructor();
+        uiSheets.current = null;
+      }
+      resObserver.disconnect();
+    };
+  }, []); // []: do not track any params, call only once
 
-	shouldComponentUpdate() {
-		// as component is not linked to the in-app data model, there is no need in updates
-		return false;
-	}
+  return <div ref={uiContainer} style={{ height: "100%" }}></div>;
 }
 
 export default SheetsView;
