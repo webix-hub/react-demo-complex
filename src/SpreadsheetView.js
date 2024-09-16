@@ -2,7 +2,6 @@
 // this one is a static view, not linked to the React data store
 
 import React, { useRef, useEffect } from "react";
-import ReactDOM from "react-dom";
 
 import "@xbs/webix-pro/webix.css";
 import "@xbs/spreadsheet/spreadsheet.css";
@@ -18,7 +17,7 @@ function SheetsView(props) {
       if (uiSheets.current) uiSheets.current.adjust();
     });
 
-    const container = ReactDOM.findDOMNode(uiContainer.current);
+    const container = uiContainer.current;
 
     webix.ready(() => {
       require("@xbs/spreadsheet");

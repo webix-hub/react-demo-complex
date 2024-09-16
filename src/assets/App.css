@@ -1,4 +1,4 @@
-body{
+body {
   padding: 0;
   margin: 0;
   font-family: Tahoma;
@@ -23,21 +23,21 @@ body{
 }
 
 
-.content-box{
+.content-box {
   display: flex;
   flex-direction: row;
   align-items: stretch;
 }
 
-.menu{
+.menu {
   flex: 0 0 150px;
   margin-right:10px;
 }
-.menu ul{
+.menu ul {
   padding: 10px 10px 0 0; margin:0;
   list-style-type: none;
 }
-.menu li a, .menu li a:visited{
+.menu li a, .menu li a:visited {
   line-height: 25px;
   text-decoration: none;
   padding: 5px 20px;
@@ -47,29 +47,29 @@ body{
   color: #222;
   width: 100%;
 }
-.menu li a.active, .menu li a.active:visited{
+.menu li a.active, .menu li a.active:visited {
   background: #89F18B;
 }
-.content{
+.content {
   flex: 1;
   overflow: hidden;
   min-height: 720px;
   margin:10px;
 }
-.footer{
+.footer {
   border-top: 2px solid #444;
   padding: 2px 2px;
 }
 
-.app{
+.app {
   width: 100%;
   margin: auto;
   color: #222;
 }
 
-ul li{
+ul li {
   line-height: 25px;
 }
-p{
+p {
   line-height: 20px;
 }
