@@ -419,7 +419,7 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                 ],
-                
+
                 plugins: [
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
@@ -453,7 +453,7 @@ module.exports = function (webpackEnv) {
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
-                
+
                 // Babel sourcemaps are needed for debugging into node_modules
                 // code.  Without the options below, debuggers like VSCode
                 // show incorrect code and set breakpoints on the wrong lines.
@@ -747,6 +747,17 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+        new webpack.ContextReplacementPlugin(
+          /^\.$/,
+          (context) => {
+            if (/(\\|\/)node_modules(\\|\/)@xbs(\\|\/)filemanager/.test(context.context)) {//ensure we're only doing this for modules we know about
+              context.regExp = /this_should_never_exist/
+              for (const d of context.dependencies) {
+                if (d.critical) d.critical = false;
+              }
+            }
+          }
+        ),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter

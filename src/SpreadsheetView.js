@@ -2,7 +2,6 @@
 // this one is a static view, not linked to the React data store
 
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 
 import "@xbs/webix-pro/webix.css";
 import "@xbs/spreadsheet/spreadsheet.css";
@@ -10,7 +9,7 @@ import "@xbs/spreadsheet/spreadsheet.css";
 class SheetsView extends Component {
 	constructor(props) {
 		super(props);
-		this.uiContainer = React.createRef();
+		this.uiContainer = React.createRef(null);
 	}
 
 	render() {
@@ -18,7 +17,7 @@ class SheetsView extends Component {
 	}
 
 	componentDidMount() {
-		const container = ReactDOM.findDOMNode(this.uiContainer.current);
+		const container = this.uiContainer.current;
 
 		webix.ready(() => {
 			require("@xbs/spreadsheet");
