@@ -4,7 +4,7 @@ import App from "./App";
 import * as webix from "@xbs/webix-pro";
 
 it("renders without crashing", () => {
-	// hardcode a global variable (required for complex widgeets)
+	// hardcode a global variable (required for complex widgets)
 	window.webix = webix;
 	webix.CustomScroll.init();
 
