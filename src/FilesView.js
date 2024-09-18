@@ -9,7 +9,7 @@ import "@xbs/filemanager/codebase/filemanager.css";
 class FilesView extends Component {
 	constructor(props) {
 		super(props);
-		this.uiContainer = React.createRef(null);
+		this.uiContainer = React.createRef();
 	}
 
 	render() {

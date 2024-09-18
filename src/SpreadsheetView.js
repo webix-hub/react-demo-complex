@@ -9,7 +9,7 @@ import "@xbs/spreadsheet/spreadsheet.css";
 class SheetsView extends Component {
 	constructor(props) {
 		super(props);
-		this.uiContainer = React.createRef(null);
+		this.uiContainer = React.createRef();
 	}
 
 	render() {

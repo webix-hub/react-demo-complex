@@ -45,6 +45,7 @@ window.webix = webix;
 ```
 
 ```js
+this.uiContainer = React.createRef();
 componentDidMount() {
    webix.ready(() => {
       require("@xbs/filemanager")
