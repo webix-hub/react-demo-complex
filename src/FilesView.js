@@ -2,7 +2,6 @@
 // this one is a static view, not linked to the React data store
 
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 
 import '@xbs/webix-pro/webix.css';
 import "@xbs/filemanager/codebase/filemanager.css";
@@ -18,7 +17,7 @@ class FilesView extends Component {
 	}
 
 	componentDidMount() {
-    const container = ReactDOM.findDOMNode(this.uiContainer.current);
+    const container = this.uiContainer.current;
 
 		webix.ready(() => {
 			require("@xbs/filemanager");
